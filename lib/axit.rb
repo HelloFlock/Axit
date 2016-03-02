@@ -11,8 +11,13 @@ module Axit
     end
 
     def whitelisted?
+      raise NotAuthorizedError if current_user.nil?
       !!(prefix_string.constantize)
-        .send(action_name, current_user) == true ? true : (raise NotAuthorizedError)
+        .send(action_name, current_user, params) == true ?
+        true : (raise NotAuthorizedError)
+
+    rescue
+      raise NotAuthorizedError
     end
 
     def prefix_string
@@ -27,9 +32,9 @@ module Axit
 
     private
 
-    def can_view?(fragment)
+    def can_view?(fragment, options = {})
       !!(prefix_string.constantize)
-        .send(fragment, current_user)
+        .send(fragment, current_user, options)
     end
 
     def prefix_string
