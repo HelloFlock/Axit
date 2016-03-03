@@ -12,7 +12,11 @@ module Axit
 
     def whitelisted?
       !!(prefix_string.constantize)
-        .send(action_name, current_user) == true ? true : (raise NotAuthorizedError)
+        .send(action_name, current_user) == true ?
+        true : (raise NotAuthorizedError)
+
+    rescue
+      raise NotAuthorizedError
     end
 
     def prefix_string
