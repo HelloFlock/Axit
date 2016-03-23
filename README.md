@@ -11,7 +11,7 @@ To use it in a controller,
 
 ```ruby
   include Axit::Controllers
-  before_action :axit
+  before_action :axit!
 ```
 
 Adding a method to rescue from exception is recommended. For example,
