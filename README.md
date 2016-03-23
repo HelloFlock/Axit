@@ -129,3 +129,11 @@ end
 ```
 
 Any controller that has to use Axit can only include this concern and that controller is now protected by Axit.
+
+For example, to include Axit in Users controllers we have included it like so: 
+
+```ruby
+class UsersController < BaseController
+  include Axitable
+end
+```
