@@ -32,9 +32,9 @@ module Axit
 
     private
 
-    def can_view?(fragment)
+    def can_view?(fragment, options = {})
       !!(prefix_string.constantize)
-        .send(fragment, current_user)
+        .send(fragment, current_user, options)
     end
 
     def prefix_string
