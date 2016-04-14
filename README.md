@@ -66,15 +66,9 @@ If we want to auth a fragment in this view:
 ``` app/views/broker/companies/index.html.erb ```
 Then Axit will expect it's auth to be defined in:
 ``` app/auth/views/broker/companies/index.rb ```
-Use like so in the view:
-```erb
-<% if can_view? :new_company_link %>
-  <a class="btn btn-success" type="button" href="<%= new_broker_company_path  %>"> 
-    NewCompany
-  </a>
- <% end %>
-```
+
 The View's auth file looks like this: 
+
 ```ruby
 module Auth
   module Views
@@ -82,7 +76,7 @@ module Auth
       module Companies
         module Index
           class << self
-            def new_company_link(user)
+            def new_company_link(user, options = {})
               true
             end
           end
@@ -91,6 +85,25 @@ module Auth
     end
   end
 end
+```
+
+Use like so in the view:
+```erb
+<% if can_view? :new_company_link %>
+  <a class="btn btn-success" type="button" href="<%= new_broker_company_path  %>"> 
+    NewCompany
+  </a>
+ <% end %>
+```
+
+You may also pass in options with can_view? like so:
+
+```erb
+<% if can_view? :new_company_link, { custom_param: params[:id] } %>
+  <a class="btn btn-success" type="button" href="<%= new_broker_company_path  %>"> 
+    NewCompany
+  </a>
+ <% end %>
 ```
 
 ## How we use it at Flock
