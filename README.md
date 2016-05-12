@@ -1,8 +1,8 @@
 ### Axit - Role based authorization for Rails.
 
-Axit routes incoming requests to access resources like controllers, views ad part of views to their authorizers before the request reaches the resource.
+Axit routes incoming requests to access resources like controllers, views and part of views to their authorizers before the request reaches the resource.
 
-So if a request say a GET /users/:id tries to acceess a user's show page, then the request is first routed to User controllers's show action's authorizer. The authorizer method will check who the logged in user is and then based on the 
+So if a request say a GET /users/:id tries to access a user's show page, then the request is first routed to User controllers's show action's authorizer. The authorizer method will check who the logged in user is and then based on the 
 access levels of that user, the method returns a true if they are allowed to perform that action. Else a false is returned and a Axit::NotAuthorizedError exception is raised.
 
 ## Controllers
