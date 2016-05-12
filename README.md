@@ -30,7 +30,7 @@ Adding a method to rescue from exception is recommended. For example,
 If you want to use Axit for Users controller,
 
 1. ```app/controllers/users_controller.rb``` 
-then it's authorizer filer should be in
+then it's authorizer file should be in
 2. ``` app/auth/controllers/users.rb```
 
 If there is a index action in 1 above, then a method like the following should be in 2:
@@ -141,7 +141,7 @@ module Axitable
 end
 ```
 
-Any controller that has to use Axit can only include this concern and that controller is now protected by Axit.
+Any controller that has to use Axit only has to include this concern and that controller is now protected by Axit.
 
 For example, to include Axit in Users controllers we have included it like so: 
 
