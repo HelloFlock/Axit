@@ -13,7 +13,7 @@ module Axit
     def whitelisted?
       raise NotAuthorizedError if current_user.nil?
       !!(prefix_string.constantize)
-        .send(action_name, current_user) == true ?
+        .send(action_name, current_user, params) == true ?
         true : (raise NotAuthorizedError)
 
     rescue
