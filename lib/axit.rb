@@ -2,6 +2,9 @@ module Axit
   class NotAuthorizedError < StandardError; end
 
   module Controllers
+    # This prefix is used for properly namespacing auth within
+    # Auth::Controllers namespace.
+
     PREFIX = 'Auth::Controllers'.freeze
 
     private
@@ -11,28 +14,46 @@ module Axit
     end
 
     def whitelisted?
+      # If user isn't logged in, raise Axit::Unauthorized
+
       raise NotAuthorizedError if current_user.nil?
+
+      # Build auth method name, constantize it, and call a method named
+      # after the action name with current_user object and controller
+      # params.
+
       !!(prefix_string.constantize)
         .send(action_name, current_user, params) == true ?
         true : (raise NotAuthorizedError)
 
     rescue
+      # If anything fails in the auth method, raise this exception and
+      # indicate that auth isn't working.
+
       raise NotAuthorizedError
     end
 
     def prefix_string
-      # controller name does not give namespace
+      # Using params[:controller] because controller_name does not give namespace
+      # and it is good enough
+
       c = params[:controller]
       "#{PREFIX}::#{c.camelize}"
     end
   end
 
   module Views
+    # This prefix is used for properly namespacing auth within
+    # Auth::Views namespace.
+
     PREFIX = 'Auth::Views'.freeze
 
     private
 
     def can_view?(fragment, options = {})
+      # Build auth method name, constantize it, call fragment name as a method
+      # and pass in current_user and options
+
       !!(prefix_string.constantize)
         .send(fragment, current_user, options)
     end
