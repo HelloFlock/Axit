@@ -1,3 +1,7 @@
+require "zeitwerk"
+loader = Zeitwerk::Loader.new
+loader.setup
+
 module Axit
   class NotAuthorizedError < StandardError; end
 
@@ -16,14 +20,14 @@ module Axit
     def whitelisted?
       # If user isn't logged in, raise Axit::Unauthorized
 
-      raise NotAuthorizedError if current_user.nil?
+      raise NotAuthorizedError if current_employee.nil?
 
       # Build auth method name, constantize it, and call a method named
-      # after the action name with current_user object and controller
+      # after the action name with current_employee object and controller
       # params.
 
       !!(prefix_string.constantize)
-        .send(action_name, current_user, params) == true ?
+        .send(action_name, current_employee, params) == true ?
         true : (raise NotAuthorizedError)
 
     rescue
@@ -52,10 +56,10 @@ module Axit
 
     def can_view?(fragment, options = {})
       # Build auth method name, constantize it, call fragment name as a method
-      # and pass in current_user and options
+      # and pass in current_employee and options
 
       !!(prefix_string.constantize)
-        .send(fragment, current_user, options)
+        .send(fragment, current_employee, options)
     end
 
     def prefix_string

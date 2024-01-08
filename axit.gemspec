@@ -8,4 +8,5 @@ Gem::Specification.new do |s|
   s.files       = ["lib/axit.rb"]
   s.licenses    = ['MIT']
   s.homepage = 'https://github.com/HelloFlock'
+  s.add_runtime_dependency('zeitwerk', '~> 2.2')
 end
